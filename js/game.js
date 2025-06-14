@@ -37,10 +37,19 @@ const characters = {
 function startGame() {
     document.getElementById('titleScreen').classList.add('hidden');
     document.getElementById('gameScreen').classList.remove('hidden');
+    
+    // Add mobile detection and handling
+    if (window.innerWidth < 768) {
+        document.body.classList.add('mobile-device');
+    }
+    
     loadStoryData().then(() => {
         loadScene('intro');
         updateUI();
     });
+    
+    // Add event listeners for mobile-specific behaviors
+    addMobileEventListeners();
 }
 
 // Load story data from JSON file
@@ -262,8 +271,49 @@ function loadGame() {
 // Auto-save periodically
 setInterval(saveGame, 10000);
 
+// Mobile-specific event listeners
+function addMobileEventListeners() {
+    // Handle virtual keyboard issues
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            // Scroll to the input when focused on mobile
+            if (document.body.classList.contains('mobile-device')) {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        });
+    });
+    
+    // Add touch feedback for buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', () => {
+            button.classList.add('active-touch');
+        });
+        button.addEventListener('touchend', () => {
+            button.classList.remove('active-touch');
+        });
+    });
+    
+    // Handle orientation changes
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 768) {
+            document.body.classList.add('mobile-device');
+        } else {
+            document.body.classList.remove('mobile-device');
+        }
+    });
+}
+
 // Load saved game on page load
 window.addEventListener('DOMContentLoaded', () => {
+    // Check if mobile device
+    if (window.innerWidth < 768) {
+        document.body.classList.add('mobile-device');
+    }
+    
     const saved = localStorage.getItem('llmystery_save');
     if (saved) {
         const loadButton = document.createElement('button');

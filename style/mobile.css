@@ -1,0 +1,73 @@
+/* Mobile-specific styles */
+
+@media (max-width: 768px) {
+    /* General adjustments */
+    body {
+        font-size: 14px;
+    }
+    
+    /* Title screen */
+    #titleScreen h1 {
+        font-size: 3rem !important;
+    }
+    
+    #titleScreen p {
+        font-size: 1rem !important;
+        padding: 0 1rem;
+    }
+    
+    /* Game UI adjustments */
+    #gameScreen {
+        padding: 0.5rem;
+    }
+    
+    /* Character modal */
+    #characterModal .evidence-card,
+    #puzzleModal .evidence-card {
+        width: 95%;
+        max-width: 95%;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+    
+    /* Input fields */
+    textarea, input {
+        font-size: 16px !important; /* Prevents iOS zoom on focus */
+    }
+    
+    /* Buttons */
+    button {
+        padding: 0.75rem !important;
+        min-height: 44px; /* Minimum touch target size */
+    }
+    
+    /* Evidence cards */
+    .evidence-card {
+        padding: 0.75rem !important;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Text size adjustments */
+    .text-6xl {
+        font-size: 2.5rem !important;
+    }
+    
+    .text-2xl {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Fix for modal positioning */
+    .fixed {
+        position: fixed !important;
+    }
+    
+    /* Touch-friendly hover states */
+    .suspect-card:hover {
+        transform: none;
+    }
+    
+    .suspect-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
