@@ -23,9 +23,11 @@ LLMystery is a static web game that uses free LLM APIs to create an immersive de
 
 ## AI Integration
 
-The game uses the Hugging Face Inference API with the Google Flan-T5 model for:
+The game uses the Hugging Face Inference API with the Google Flan-T5-base model for:
 - Generating detective hints based on collected evidence and clues
 - Creating dynamic character responses during interrogations
+
+**Important Note**: The Flan-T5-base model has a 250 character limit for inputs. The game includes a character counter to help you stay within this limit.
 
 To use your own API key:
 1. Create an account on [Hugging Face](https://huggingface.co/)

@@ -6,8 +6,15 @@ const HF_API_KEY = CONFIG.HF_API_KEY || ""; // Get API key from config.js
 
 // Function to ask AI for hints
 async function askAI() {
-    const query = document.getElementById('aiQuery').value.trim();
+    const queryInput = document.getElementById('aiQuery');
+    const query = queryInput.value.trim();
     if (!query) return;
+    
+    // Check token limit (250 characters for Flan-T5-base)
+    if (query.length > 250) {
+        alert("Your question exceeds the 250 character limit. Please shorten it.");
+        return;
+    }
 
     const responseDiv = document.getElementById('aiResponse');
     responseDiv.classList.remove('hidden');
@@ -31,7 +38,8 @@ async function askAI() {
         console.error("AI API Error:", error);
     }
 
-    document.getElementById('aiQuery').value = '';
+    queryInput.value = '';
+    document.getElementById('tokenCounter').textContent = '0/250';
 }
 
 // Generate AI response using Hugging Face API
@@ -90,6 +98,13 @@ async function generateCharacterResponse(characterName, personality, question) {
     if (!HF_API_KEY) {
         const response = generateFallbackCharacterResponse(characterName, question);
         updateCharacterDialogue(characterName, question, response);
+        return;
+    }
+    
+    // Check token limit for character questions
+    if (question.length > 250) {
+        const fallbackResponse = "I'm sorry, your question is too long for me to process. Could you ask something shorter?";
+        updateCharacterDialogue(characterName, question, fallbackResponse);
         return;
     }
     
@@ -222,3 +237,28 @@ function generateFallbackCharacterResponse(characterName, question) {
     const characterResponses = responses[characterName] || ["I'm not sure about that..."];
     return characterResponses[Math.floor(Math.random() * characterResponses.length)];
 }
+
+// Add token counter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const queryInput = document.getElementById('aiQuery');
+    const tokenCounter = document.getElementById('tokenCounter');
+    
+    if (queryInput && tokenCounter) {
+        queryInput.addEventListener('input', function() {
+            const currentLength = this.value.length;
+            tokenCounter.textContent = `${currentLength}/250`;
+            
+            // Visual feedback when approaching/exceeding limit
+            if (currentLength > 250) {
+                tokenCounter.classList.add('text-red-500');
+                tokenCounter.classList.remove('text-yellow-400');
+            } else if (currentLength > 200) {
+                tokenCounter.classList.add('text-orange-400');
+                tokenCounter.classList.remove('text-yellow-400', 'text-red-500');
+            } else {
+                tokenCounter.classList.add('text-yellow-400');
+                tokenCounter.classList.remove('text-orange-400', 'text-red-500');
+            }
+        });
+    }
+});
