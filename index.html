@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMystery: AI-Driven Detective Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="./style/main.css" rel="stylesheet">
+</head>
+<body class="noir-bg min-h-screen text-white">
+    <!-- Game Container -->
+    <div id="gameContainer" class="container mx-auto px-4 py-8">
+        
+        <!-- Title Screen -->
+        <div id="titleScreen" class="text-center min-h-screen flex flex-col justify-center">
+            <h1 class="creepy-font text-6xl md:text-8xl text-orange-500 mb-8 typewriter">LLMystery</h1>
+            <p class="detective-font text-xl md:text-2xl mb-8">AI-Driven Detective Game</p>
+            <p class="text-lg mb-12 max-w-2xl mx-auto">
+                At Nalanda's ancient ruins, a rare Buddhist manuscript has gone missing. 
+                You must decode clues, question suspects, and trace the stolen history before it's smuggled abroad.
+            </p>
+            <button onclick="startGame()" class="bg-orange-600 hover:bg-orange-700 px-8 py-4 rounded-lg text-xl detective-font pulse-glow">
+                <i class="fas fa-play mr-2"></i>Start Investigation
+            </button>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="gameScreen" class="hidden">
+            <!-- Header -->
+            <div class="bg-black bg-opacity-50 p-4 rounded-lg mb-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="detective-font text-2xl text-orange-500">The Missing Manuscript</h2>
+                    <div class="flex space-x-4">
+                        <span class="bg-red-900 px-3 py-1 rounded">Evidence: <span id="evidenceCount">0</span></span>
+                        <span class="bg-blue-900 px-3 py-1 rounded">Clues: <span id="clueCount">0</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Main Story Panel -->
+                <div class="lg:col-span-2">
+                    <div class="evidence-card p-6 rounded-lg mb-6">
+                        <h3 class="text-xl font-bold mb-4 text-orange-400">
+                            <i class="fas fa-book-open mr-2"></i>Current Scene
+                        </h3>
+                        <div id="storyText" class="text-lg leading-relaxed mb-6">
+                            <!-- Story content will be inserted here -->
+                        </div>
+                        
+                        <!-- Choices -->
+                        <div id="choicesContainer" class="space-y-3">
+                            <!-- Choice buttons will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- AI Assistant Panel -->
+                    <div class="evidence-card p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-4 text-green-400">
+                            <i class="fas fa-robot mr-2"></i>AI Detective Assistant
+                        </h3>
+                        <div class="mb-4">
+                            <textarea id="aiQuery" placeholder="Ask your AI assistant about the case..." 
+                                    class="w-full p-3 bg-gray-800 rounded border border-gray-600 text-white" rows="3"></textarea>
+                        </div>
+                        <button onclick="askAI()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded mb-4">
+                            <i class="fas fa-question-circle mr-2"></i>Ask AI
+                        </button>
+                        <div id="aiResponse" class="bg-gray-800 p-4 rounded border-l-4 border-green-500 hidden">
+                            <!-- AI responses will appear here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Panel -->
+                <div class="space-y-6">
+                    
+                    <!-- Evidence Collection -->
+                    <div class="evidence-card p-4 rounded-lg">
+                        <h3 class="text-lg font-bold mb-4 text-yellow-400">
+                            <i class="fas fa-search mr-2"></i>Evidence
+                        </h3>
+                        <div id="evidenceList" class="space-y-2">
+                            <!-- Evidence items will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- Suspects -->
+                    <div class="evidence-card p-4 rounded-lg">
+                        <h3 class="text-lg font-bold mb-4 text-red-400">
+                            <i class="fas fa-users mr-2"></i>Suspects
+                        </h3>
+                        <div id="suspectsList" class="space-y-3">
+                            <!-- Suspects will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- Clues & Notes -->
+                    <div class="evidence-card p-4 rounded-lg">
+                        <h3 class="text-lg font-bold mb-4 text-blue-400">
+                            <i class="fas fa-clipboard-list mr-2"></i>Clues
+                        </h3>
+                        <div id="cluesList" class="space-y-2 text-sm">
+                            <!-- Clues will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Character Interaction Modal -->
+        <div id="characterModal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center z-50">
+            <div class="evidence-card p-6 rounded-lg max-w-2xl mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="characterName" class="text-2xl font-bold text-orange-400"></h3>
+                    <button onclick="closeCharacterModal()" class="text-white hover:text-red-400">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div id="characterImage" class="mb-4 text-center">
+                    <!-- Character image/icon -->
+                </div>
+                <div id="characterDialogue" class="mb-6 text-lg">
+                    <!-- Character dialogue -->
+                </div>
+                <div class="mb-4">
+                    <input type="text" id="playerQuestion" placeholder="Ask a question..." 
+                           class="w-full p-3 bg-gray-800 rounded border border-gray-600 text-white">
+                </div>
+                <button onclick="askCharacter()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">
+                    <i class="fas fa-comment mr-2"></i>Ask Question
+                </button>
+            </div>
+        </div>
+
+        <!-- Mini-Game Modal -->
+        <div id="puzzleModal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center z-50">
+            <div class="evidence-card p-6 rounded-lg max-w-md mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-orange-400">Lock Puzzle</h3>
+                    <button onclick="closePuzzleModal()" class="text-white hover:text-red-400">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <p class="mb-4">Enter the 4-digit code based on the clues:</p>
+                <div class="flex space-x-2 mb-4 justify-center">
+                    <input type="number" class="w-12 h-12 text-center bg-gray-800 border border-gray-600 rounded text-white" 
+                           maxlength="1" oninput="this.value=this.value.slice(0,1)">
+                    <input type="number" class="w-12 h-12 text-center bg-gray-800 border border-gray-600 rounded text-white" 
+                           maxlength="1" oninput="this.value=this.value.slice(0,1)">
+                    <input type="number" class="w-12 h-12 text-center bg-gray-800 border border-gray-600 rounded text-white" 
+                           maxlength="1" oninput="this.value=this.value.slice(0,1)">
+                    <input type="number" class="w-12 h-12 text-center bg-gray-800 border border-gray-600 rounded text-white" 
+                           maxlength="1" oninput="this.value=this.value.slice(0,1)">
+                </div>
+                <button onclick="checkPuzzle()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded w-full">
+                    <i class="fas fa-key mr-2"></i>Try Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./config.js"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/ai.js"></script>
+    <script src="./js/puzzles.js"></script>
+</body>
+</html>

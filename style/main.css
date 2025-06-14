@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Press+Start+2P:wght@400&display=swap');
+
+.detective-font { font-family: 'Press Start 2P', monospace; }
+.creepy-font { font-family: 'Creepster', cursive; }
+.horror-font { font-family: 'Nosifer', cursive; }
+
+.typewriter {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+
+.noir-bg {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+}
+
+.evidence-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.suspect-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 5px #ff6b35; }
+    50% { box-shadow: 0 0 20px #ff6b35, 0 0 30px #ff6b35; }
+    100% { box-shadow: 0 0 5px #ff6b35; }
+}

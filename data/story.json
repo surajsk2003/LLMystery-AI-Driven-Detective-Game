@@ -1,0 +1,90 @@
+{
+  "intro": {
+    "title": "The Discovery",
+    "text": "You arrive at the ancient ruins of Nalanda on a misty morning. Dr. Sharma, the head archaeologist, rushes toward you with panic in her eyes. 'The Prajnaparamita manuscript is gone!' she exclaims. 'It was our most precious find - a 1000-year-old Buddhist text that could rewrite history. Someone took it from the secure vault last night.'",
+    "choices": [
+      { "text": "Examine the vault", "action": "vault" },
+      { "text": "Interview Dr. Sharma", "action": "interview_sharma" },
+      { "text": "Check the security logs", "action": "security" }
+    ]
+  },
+  "vault": {
+    "title": "The Vault",
+    "text": "The vault door shows signs of sophisticated tampering. No brute force was used - this was done by someone with technical expertise. You notice strange symbols carved into the door frame and a small piece of torn fabric caught on the edge.",
+    "choices": [
+      { "text": "Analyze the symbols", "action": "symbols" },
+      { "text": "Collect the fabric evidence", "action": "fabric" },
+      { "text": "Look for fingerprints", "action": "fingerprints" }
+    ],
+    "evidence": ["Torn fabric", "Strange symbols"]
+  },
+  "interview_sharma": {
+    "title": "Dr. Sharma's Account",
+    "text": "Dr. Sharma explains that only four people had access to the vault: herself, Kenji (Japanese researcher), Brother Tenzin (the monastery keeper), and Raj (her research assistant). 'But I trust them all with my life,' she insists. 'There must be another explanation.'",
+    "choices": [
+      { "text": "Ask about recent visitors", "action": "visitors" },
+      { "text": "Question the access list", "action": "access" },
+      { "text": "Investigate the team dynamics", "action": "dynamics" }
+    ],
+    "suspects": [
+      { "name": "Dr. Sharma", "role": "Head Archaeologist", "suspicion": "Low" },
+      { "name": "Kenji Tanaka", "role": "Japanese Researcher", "suspicion": "Medium" },
+      { "name": "Brother Tenzin", "role": "Monastery Keeper", "suspicion": "Medium" },
+      { "name": "Raj Kumar", "role": "Research Assistant", "suspicion": "Medium" }
+    ]
+  },
+  "security": {
+    "title": "Security Investigation",
+    "text": "The security system shows the vault was accessed at 2:47 AM using a valid keycard. However, the cameras experienced a mysterious malfunction between 2:30 and 3:15 AM. Someone clearly knew how to disable the surveillance system.",
+    "choices": [
+      { "text": "Trace the keycard usage", "action": "keycard" },
+      { "text": "Examine the camera system", "action": "cameras" },
+      { "text": "Check for inside knowledge", "action": "insider" }
+    ],
+    "clues": ["Vault accessed at 2:47 AM", "Camera malfunction", "Valid keycard used"]
+  },
+  "keycard": {
+    "title": "Keycard Analysis",
+    "text": "The security logs show the keycard used belonged to Dr. Sharma, but she claims it was in her room all night. Upon checking her belongings, she discovers her keycard is indeed missing. Someone must have taken it without her knowledge.",
+    "choices": [
+      { "text": "Question Dr. Sharma further", "action": "talk_sharma" },
+      { "text": "Check for unauthorized access to rooms", "action": "room_access" },
+      { "text": "Look for the keycard", "action": "find_keycard" }
+    ],
+    "clues": ["Dr. Sharma's keycard was used", "Dr. Sharma reports keycard missing"]
+  },
+  "fabric": {
+    "title": "Fabric Analysis",
+    "text": "Upon closer inspection, the fabric appears to be from an expensive silk garment, with a distinctive pattern that looks Japanese in origin. It's torn as if caught while someone was moving quickly.",
+    "choices": [
+      { "text": "Show the fabric to Kenji", "action": "talk_kenji" },
+      { "text": "Ask Dr. Sharma about it", "action": "talk_sharma" },
+      { "text": "Search for matching clothing", "action": "search_clothes" }
+    ],
+    "evidence": ["Japanese silk fabric"],
+    "clues": ["Fabric appears to be from expensive Japanese clothing"]
+  },
+  "symbols": {
+    "title": "Symbol Analysis",
+    "text": "The symbols form a mathematical sequence that looks like a code. They appear to be freshly carved, possibly as a message or a clue left behind intentionally.",
+    "choices": [
+      { "text": "Try to decode the symbols", "action": "decode_puzzle" },
+      { "text": "Ask Brother Tenzin about them", "action": "talk_tenzin" },
+      { "text": "Look for similar symbols elsewhere", "action": "search_symbols" }
+    ],
+    "clues": ["The symbols form a mathematical sequence: 1, 1, 2, 3..."]
+  },
+  "visitors": {
+    "title": "Recent Visitors",
+    "text": "Dr. Sharma mentions that a wealthy collector from Tokyo visited three days ago, showing great interest in the manuscript. 'He offered a substantial donation to our research fund, but I declined when he asked for private access to the manuscript.'",
+    "choices": [
+      { "text": "Get details about the collector", "action": "collector_info" },
+      { "text": "Ask if anyone else met him", "action": "collector_meetings" },
+      { "text": "Check if he's still in the area", "action": "find_collector" }
+    ],
+    "suspects": [
+      { "name": "Unknown Collector", "role": "Wealthy Art Collector", "suspicion": "High" }
+    ],
+    "clues": ["Wealthy collector from Tokyo visited recently", "Collector offered donation for private access"]
+  }
+}
